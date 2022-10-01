@@ -8,20 +8,24 @@ library(tidyverse)
 library(readxl)
 ```
 
-Problem 1
+Problem 1 - nyc  transit data
 ```{r}
-
+nyc_transit_df = read_csv("./data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv")%>%
+  janitor::clean_names()%>%
+  select(line, station_name, station_latitude, station_longitude, starts_with("routes"), entry, vending, entrance_type, ada)%>%
+  mutate(entry = as.logical(ifelse(entry == "YES", "TRUE", "FALSE")))
 
 ```
-
+The nyc transit dataset 
 
 
 Problem2 - trash
 Mr. Trash Wheel sheet:
 ```{r}
-trash_df = 
+mr_trash_df = 
   read_excel("./data/Trash-Wheel-Collection-Totals-7-2020-2.xlsx", sheet = "Mr. Trash Wheel")%>%
   janitor::clean_names()%>%
+  select(dumpster:homes_powered) %>%
   drop_na(dumpster)%>%
   filter(dumpster != "Grand Total")%>%
   mutate(sports_balls = as.integer(round(sports_balls)))
@@ -33,10 +37,15 @@ Professor Trash Wheel:
 prof_trash_df = 
   read_excel("./data/Trash-Wheel-Collection-Totals-7-2020-2.xlsx", sheet = "Professor Trash Wheel")%>%
   janitor::clean_names()%>%
+  select(dumpster:homes_powered) %>%
   drop_na(dumpster)%>%
   mutate(sports_balls = as.integer(round(sports_balls)))
 ```
 
+Combine two dataset
+```{r}
+
+```
 
 
 
