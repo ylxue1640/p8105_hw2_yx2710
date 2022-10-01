@@ -1,0 +1,33 @@
+---
+title: "p8105_hw2_yx2710"
+output: github_document
+---
+
+```{r setup}
+library(tidyverse)
+library(readxl)
+```
+
+Problem 1
+```{r}
+
+
+```
+
+
+
+Problem2 - trash
+```{r}
+trash_df = 
+  read_excel("./data/Trash-Wheel-Collection-Totals-7-2020-2.xlsx", sheet = "Mr. Trash Wheel")%>%
+  janitor::clean_names()%>%
+  drop_na(dumpster)%>%
+  filter(dumpster != "Grand Total")%>%
+  mutate(sports_balls = as.integer(round(sports_balls)))
+
+```
+
+
+
+
+
