@@ -9,14 +9,7 @@ library(readxl)
 ```
 
 Problem 1 - nyc  transit data
-```{r}
-nyc_transit_df = read_csv("./data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv")%>%
-  janitor::clean_names()%>%
-  select(line, station_name, station_latitude, station_longitude, starts_with("routes"), entry, vending, entrance_type, ada)%>%
-  mutate(entry = as.logical(ifelse(entry == "YES", "TRUE", "FALSE")))
 
-```
-The nyc transit dataset 
 
 
 Problem2 - trash
@@ -45,6 +38,15 @@ prof_trash_df =
 Combine two dataset
 ```{r}
 
+mr_trash_bind_df = mr_trash_df %>%
+  mutate(cleaner = "Mr. Trash") %>%
+  mutate(dumpster = as.numeric(dumpster))
+
+prof_trash_bind_df = mutate(prof_trash_df, cleaner = "Professor Trash")
+class(prof_trash_bind_df$dumpster)
+
+trash_combine_df = 
+  bind_rows(mr_trash_bind_df, prof_trash_bind_df)
 ```
 
 
