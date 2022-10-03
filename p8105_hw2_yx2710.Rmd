@@ -10,6 +10,21 @@ library(readxl)
 
 Problem 1 - nyc  transit data
 
+```{r}
+nyc_transit_df = read_csv("./data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv")%>%
+  janitor::clean_names()%>%
+  select(line, station_name, station_latitude, station_longitude, starts_with("routes"), entry, vending, entrance_type, ada)%>%
+  mutate(entry = as.logical(ifelse(entry == "YES", "TRUE", "FALSE")))
+```
+The variables that nyc transit dataset contains are `r names(nyc_transit_df)` and it has `r ncol(nyc_transit_df)` columns and `r nrow(nyc_transit_df)` rows.
+
+How many distinct stations are there?
+```{r}
+station = distinct(nyc_transit_df, station_name, line, .keep_all = TRUE)
+nrow(station)
+```
+There are `r nrow(station)` distinct stations.
+
 
 
 Problem2 - trash
@@ -37,7 +52,6 @@ prof_trash_df =
 
 Combine two dataset
 ```{r}
-
 mr_trash_bind_df = mr_trash_df %>%
   mutate(cleaner = "Mr. Trash") %>%
   mutate(dumpster = as.numeric(dumpster))
