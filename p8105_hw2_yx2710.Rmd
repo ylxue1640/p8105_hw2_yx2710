@@ -18,14 +18,25 @@ nyc_transit_df = read_csv("./data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv"
 ```
 The variables that nyc transit dataset contains are `r names(nyc_transit_df)` and it has `r ncol(nyc_transit_df)` columns and `r nrow(nyc_transit_df)` rows.
 
-How many distinct stations are there?
+Q:How many distinct stations are there?
 ```{r}
 station = distinct(nyc_transit_df, station_name, line, .keep_all = TRUE)
 nrow(station)
 ```
-There are `r nrow(station)` distinct stations.
+A:There are `r nrow(station)` distinct stations.
 
+Q:How many stations are ADA compliant?
+```{r}
+station_ada = filter(nyc_transit_df, ada == "TRUE")
+nrow(station_ada)
+```
+A: There are `r nrow(station_ada)` stations that are ADA compliant.
 
+Q:What proportion of station entrances / exits without vending allow entrance?
+```{r}
+proportion_e_nov = nrow(filter(nyc_transit_df, entry == "TRUE", vending == "NO"))/nrow(filter(nyc_transit_df, vending == "NO"))
+```
+A: The proportion of station entrances / exits without vending allow entrance is `r proportion_e_nov`.
 
 Problem2 - trash
 Mr. Trash Wheel sheet:
