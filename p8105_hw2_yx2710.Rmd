@@ -13,7 +13,7 @@ Problem 1 - nyc  transit data
 ```{r}
 nyc_transit_df = read_csv("./data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv")%>%
   janitor::clean_names()%>%
-  select(line, station_name, station_latitude, station_longitude, starts_with("routes"), entry, vending, entrance_type, ada)%>%
+  select(line, station_name, station_latitude, station_longitude, starts_with("route"), entry, vending, entrance_type, ada)%>%
   mutate(entry = as.logical(ifelse(entry == "YES", "TRUE", "FALSE")))
 ```
 The variables that nyc transit dataset contains are `r names(nyc_transit_df)` and it has `r ncol(nyc_transit_df)` columns and `r nrow(nyc_transit_df)` rows.
@@ -37,6 +37,32 @@ Q:What proportion of station entrances / exits without vending allow entrance?
 proportion_e_nov = nrow(filter(nyc_transit_df, entry == "TRUE", vending == "NO"))/nrow(filter(nyc_transit_df, vending == "NO"))
 ```
 A: The proportion of station entrances / exits without vending allow entrance is `r proportion_e_nov`.
+
+Reformat data so that route number and route name are distinct variables. How many distinct stations serve the A train? Of the stations that serve the A train, how many are ADA compliant?
+```{r}
+nyc_transit_re_df = 
+  nyc_transit_df%>%
+  mutate(
+    route8 = as.character(route8),
+    route9 = as.character(route9),
+    route10 = as.character(route10),
+    route11 = as.character(route11))%>%
+  pivot_longer(route1:route11, 
+               names_to = "route",
+               values_to = "route_number")
+
+station_re = distinct(nyc_transit_re_df, station_name, line, .keep_all = TRUE)
+
+station_A = filter(station_re, route_number == "A" )
+nrow(station_A)
+
+station_A_ada = filter(station_A, ada == "TRUE")
+nrow(station_A_ada)
+```
+There are `r nrow(station_A)` distinct stations serve the A train.
+Of the stations that serve the A train, `r nrow(station_A_ada)` are ADA compliant.
+
+
 
 Problem2 - trash
 Mr. Trash Wheel sheet:
