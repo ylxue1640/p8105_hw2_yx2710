@@ -68,23 +68,23 @@ Problem2 - trash
 Mr. Trash Wheel sheet:
 ```{r}
 mr_trash_df = 
-  read_excel("./data/Trash-Wheel-Collection-Totals-7-2020-2.xlsx", sheet = "Mr. Trash Wheel")%>%
+  read_excel("./data/Trash Wheel Collection Data.xlsx", sheet = "Mr. Trash Wheel", range = "A2:N550")%>%
   janitor::clean_names()%>%
   select(dumpster:homes_powered) %>%
   drop_na(dumpster)%>%
   filter(dumpster != "Grand Total")%>%
-  mutate(sports_balls = as.integer(round(sports_balls)))
+  mutate(sports_balls = as.integer(round(sports_balls)),
+         year = as.numeric(year))
 
 ```
 
 Professor Trash Wheel:
 ```{r}
 prof_trash_df = 
-  read_excel("./data/Trash-Wheel-Collection-Totals-7-2020-2.xlsx", sheet = "Professor Trash Wheel")%>%
+  read_excel("./data/Trash Wheel Collection Data.xlsx", sheet = "Professor Trash Wheel",range = "A2:M97")%>%
   janitor::clean_names()%>%
   select(dumpster:homes_powered) %>%
-  drop_na(dumpster)%>%
-  mutate(sports_balls = as.integer(round(sports_balls)))
+  drop_na(dumpster)
 ```
 
 Combine two dataset
@@ -99,6 +99,18 @@ class(prof_trash_bind_df$dumpster)
 trash_combine_df = 
   bind_rows(mr_trash_bind_df, prof_trash_bind_df)
 ```
+
+The merged dataset contains `r nrow(trash_combine_df)` rows and `r ncol(trash_combine_df)` columns. The names of the variables are `r names(trash_combine_df)`.
+
+The total weight of trash collected by Professor Trash Wheel is `r sum(prof_trash_df$weight_tons)` tons.
+
+```{r}
+mr_total_ball_df = 
+  mr_trash_df%>%
+  filter(year == 2020)
+```
+
+The total number of sports balls collected by Mr. Trash Wheel in 2020 is `r sum(mr_total_ball_df$sports_balls)`
 
 Problem3 - fivethirtyeight
 clean the data in pols-month.csv
