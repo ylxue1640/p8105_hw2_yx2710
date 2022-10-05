@@ -100,7 +100,7 @@ trash_combine_df =
   bind_rows(mr_trash_bind_df, prof_trash_bind_df)
 ```
 
-The merged dataset contains `r nrow(trash_combine_df)` rows and `r ncol(trash_combine_df)` columns. The names of the variables are `r names(trash_combine_df)`.
+The merged dataset contains `r nrow(trash_combine_df)` rows and `r ncol(trash_combine_df)` columns. The names of the variables are `r names(trash_combine_df)`. 
 
 The total weight of trash collected by Professor Trash Wheel is `r sum(prof_trash_df$weight_tons)` tons.
 
