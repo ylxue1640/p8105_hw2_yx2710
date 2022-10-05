@@ -137,6 +137,7 @@ unemp_df =
     names_to = "month",
     values_to = "unemployement"
   )
+
 ```
 
 Join the datasets by merging snp into pols
@@ -152,7 +153,16 @@ merge_all_df =
 ```
 
 
+The pols-month dataset contains `r nrow(pols_month_df)` rows and `r ncol(pols_month_df)` columns. The names of the variables are `r names(pols_month_df)`. The range of years is `r max(pols_month_df$year)-min(pols_month_df$year)`.
 
+The snp dataset contains `r nrow(snp_df)` rows and `r ncol(snp_df)` columns. The names of the 
+variables are `r names(snp_df)`. The range of years is `r max(snp_df$year)-min(snp_df$year)`.
 
+The unemployment dataset contains `r nrow(unemp_df)` rows and `r ncol(unemp_df)` columns. The names of the 
+variables are `r names(unemp_df)`. The range of years is `r max(unemp_df$year)-min(unemp_df$year)`.
 
+The pols_snp_df dataset contains `r nrow(pols_snp_df)` rows and `r ncol(pols_snp_df)` columns. The names of the 
+variables are `r names(pols_snp_df)`. The range of years is `r max(pols_snp_df$year)-min(pols_snp_df$year)`.
 
+The dataset that merge all three datesets contains `r nrow(merge_all_df)` rows and `r ncol(merge_all_df)` columns. The names of the 
+variables are `r names(merge_all_df)`. The range of years is `r max(merge_all_df$year)-min(merge_all_df$year)`.
